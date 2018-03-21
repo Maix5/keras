@@ -143,6 +143,25 @@ class Capsule(Layer):
     def compute_output_shape(self, input_shape):
         return (None, self.num_capsule, self.dim_capsule)
 
+    def get_config(self):
+        """Returns the config of the layer.
+
+        A layer config is a Python dictionary (serializable)
+        containing the configuration of a layer.
+
+        # Returns
+            Python dictionary.
+        """
+        config = {
+                'num_capsule' : self.num_capsule,
+                'dim_capsule' : self.dim_capsule,
+                'routings' : self.routings,
+                'share_weights' : self.share_weights,
+                'activation' : self.activation
+                }
+        base_config = super(Capsule, self).get_config()
+        return dict(list(base_config.items()) + list(config.items()))
+
 
 batch_size = 128
 num_classes = 10
@@ -220,3 +239,34 @@ else:
         epochs=epochs,
         validation_data=(x_test, y_test),
         workers=4)
+
+
+
+save_dir = os.path.join(os.getcwd(), 'saved_models')
+model_name = 'keras_cifar10_capsule_trained_model.h5'
+
+
+# Save model and weights
+if not os.path.isdir(save_dir):
+    os.makedirs(save_dir)
+model_path = os.path.join(save_dir, model_name)
+model.save(model_path)
+print('Saved trained model at %s ' % model_path)
+
+# Score trained model.
+scores = model.evaluate(x_test, y_test, verbose=1)
+print('Test loss:', scores[0])
+print('Test accuracy:', scores[1])
+
+
+
+"""Loading saved **capsule model** (defined in this class) example:
+
+`model_path` --- path to the saved model.
+
+```python
+custom_layers = dict([('Capsule', Capsule), ('margin_loss', margin_loss)])
+model = load_model(model_path, custom_layers)
+```
+
+"""
