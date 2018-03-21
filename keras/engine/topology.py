@@ -736,7 +736,7 @@ class Layer(object):
                 Shape tuples can include None for free dimensions,
                 instead of an integer.
 
-        # Returns2, 16, 3, True
+        # Returns
             An input shape tuple.
         """
         if hasattr(self, 'get_output_shape_for'):
