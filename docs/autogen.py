@@ -260,6 +260,31 @@ PAGES = [
         ]
     },
     {
+        'page': 'preprocessing/image.md',
+        'functions': [
+            preprocessing.image.random_rotation,
+            preprocessing.image.random_shift,
+            preprocessing.image.random_shear,
+            preprocessing.image.random_zoom,
+            preprocessing.image.random_channel_shift,
+            preprocessing.image.random_brightness,
+        ],
+        'classes': [
+            preprocessing.image.ImageDataGenerator,
+        ]
+    },
+    {
+        'page': 'preprocessing/text.md',
+        'functions': [
+            preprocessing.text.hashing_trick,
+            preprocessing.text.one_hot,
+            preprocessing.text.text_to_word_sequence,
+        ],
+        'classes': [
+            preprocessing.text.Tokenizer,
+        ]
+    },
+    {
         'page': 'layers/wrappers.md',
         'all_module_classes': [wrappers],
     },
